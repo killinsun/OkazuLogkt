@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">OkazuLogkt</string>
+    <string name="service_name">OkazuLog</string>
+    <string name="btn_login">Login</string>
+    <string name="btn_logout">Logout</string>
+    <string name="item">test</string>
+    <string name="id_label">ID</string>
+    <string name="gId_label">Group ID</string>
+    <string name="profile">Profile</string>
+    <string name="okazulog">OkazuLog</string>
+</resources>
