@@ -8,4 +8,5 @@
     <string name="gId_label">Group ID</string>
     <string name="profile">Profile</string>
     <string name="okazulog">OkazuLog</string>
+    <string name="textview">hogeItem</string>
 </resources>

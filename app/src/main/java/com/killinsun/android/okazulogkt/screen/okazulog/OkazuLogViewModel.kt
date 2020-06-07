@@ -19,26 +19,20 @@ class OkazuLogViewModel : ViewModel() {
     val firestore: RecipieRepository =
         RecipieRepository()
 
-    // Recipies
-    private var _recipies = MutableLiveData<List<Recipie>?>()
-    val recipies:LiveData<List<Recipie>?>
-        get() = _recipies
+    // User
+    private val _user = MutableLiveData<FirebaseUser>()
+    val user: LiveData<FirebaseUser>
+        get() = _user
 
     // User Email
     private val _userEmail = MutableLiveData<String>()
     val userEmail: LiveData<String>
         get() = _userEmail
 
-    // User
-    private val _user = MutableLiveData<FirebaseUser>()
-    val user: LiveData<FirebaseUser>
-        get() = _user
-
-    // Recipie Name array
-    private val _recipieNameArray = MutableLiveData<ArrayList<String>>()
-    val recipieNameArray: LiveData<ArrayList<String>>
-        get() = _recipieNameArray
-
+    // recipies
+    private var _recipies = MutableLiveData<List<Recipie>?>()
+    val recipies:LiveData<List<Recipie>?>
+        get() = _recipies
 
     init{
         Log.v("OkazuLogViewModel", "ViewModel created!")
@@ -50,12 +44,7 @@ class OkazuLogViewModel : ViewModel() {
     private fun initializeRecipies() {
         uiScope.launch {
             val querySnapshot = firestore.fetchAllRecipies()
-            val recipieNames = arrayListOf<String>()
-
-            for(document in querySnapshot){
-                recipieNames.add(document.data["name"].toString())
-            }
-            _recipieNameArray.value = recipieNames
+            _recipies.postValue(Recipie.mapping(querySnapshot))
         }
     }
 
