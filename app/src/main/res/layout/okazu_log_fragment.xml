@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.killinsun.android.okazulogkt.screen.okazulog.OkazuLogViewModel" />
+            type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
 <!--        <import type="android.view.View"/>-->
 
     </data>

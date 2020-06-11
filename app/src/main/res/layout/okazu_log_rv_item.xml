@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="viewmodel" type="com.killinsun.android.okazulogkt.screen.okazulog.OkazuLogViewModel" />
+        <variable name="viewmodel" type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
         <variable name="position" type="Integer" />
     </data>
 

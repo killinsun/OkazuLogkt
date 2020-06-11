@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">OkazuLogkt</string>
     <string name="service_name">OkazuLog</string>
-    <string name="btn_login">Login</string>
-    <string name="btn_logout">Logout</string>
+    <string name="btn_login">ログイン</string>
+    <string name="btn_logout">ログアウト</string>
     <string name="item">test</string>
     <string name="id_label">ID</string>
     <string name="gId_label">Group ID</string>
-    <string name="profile">Profile</string>
+    <string name="profile">プロフィール</string>
     <string name="okazulog">OkazuLog</string>
-    <string name="textview">hogeItem</string>
+    <string name="lastCookedDay">最後に作った日</string>
+    <string name="cookedCount">作った回数</string>
+    <string name="delete">削除</string>
+    <string name="update">更新</string>
+    <string name="languages">言語</string>
+    <string name="japanese">日本語</string>
+    <string name="english">英語</string>
 </resources>

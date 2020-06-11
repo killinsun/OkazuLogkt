@@ -10,9 +10,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.killinsun.android.okazulogkt.R
 import com.killinsun.android.okazulogkt.data.Recipie
 import com.killinsun.android.okazulogkt.databinding.OkazuLogRvItemBinding
+import com.killinsun.android.okazulogkt.screen.RecipieViewModel
 
 class OkazuLogAdapter (
-    private val viewModel: OkazuLogViewModel,
+    private val viewModel: RecipieViewModel,
     private val parentLifecycleOwner: LifecycleOwner
     ) : RecyclerView.Adapter<OkazuLogAdapter.OkazuLogViewHolder>(){
 

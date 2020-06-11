@@ -12,10 +12,23 @@
         <action
             android:id="@+id/action_okazuLogFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_okazuLogFragment_to_recipieDetailFragment"
+            app:destination="@id/recipieDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.killinsun.android.okazulogkt.screen.profile.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/recipieDetailFragment"
+        android:name="com.killinsun.android.okazulogkt.screen.detail.RecipieDetailFragment"
+        android:label="recipie_detail_fragment"
+        tools:layout="@layout/recipie_detail_fragment" >
+        <argument
+            android:name="recipieIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

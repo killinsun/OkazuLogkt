@@ -12,8 +12,9 @@ import kotlinx.coroutines.*
 
 class OkazuLogViewModel : ViewModel() {
 
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+    //
+    // NOTICE: Recipie class objects are stored at RecipieViewModel
+    //
 
     // Firebase Firestore
     val firestore: RecipieRepository =
@@ -29,27 +30,13 @@ class OkazuLogViewModel : ViewModel() {
     val userEmail: LiveData<String>
         get() = _userEmail
 
-    // recipies
-    private var _recipies = MutableLiveData<List<Recipie>?>()
-    val recipies:LiveData<List<Recipie>?>
-        get() = _recipies
-
     init{
         Log.v("OkazuLogViewModel", "ViewModel created!")
         _user.value = FirebaseAuth.getInstance().currentUser
         _userEmail.value = user.value?.email
-        initializeRecipies()
-    }
-
-    private fun initializeRecipies() {
-        uiScope.launch {
-            val querySnapshot = firestore.fetchAllRecipies()
-            _recipies.postValue(Recipie.mapping(querySnapshot))
-        }
     }
 
     override fun onCleared() {
         super.onCleared()
-        viewModelJob.cancel()
     }
 }
