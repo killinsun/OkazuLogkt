@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="org.apache.commons.lang3.time.DateFormatUtils" />
         <variable
             name="viewmodel"
             type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
@@ -31,15 +32,15 @@
                     android:id="@+id/recipieImageIv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{viewmodel.recipies[recipieIndex].name"
                     tools:src="@tools:sample/avatars" />
 
                 <TextView
                     android:id="@+id/recipieNameTv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{viewmodel.recipies[recipieIndex].name}"
                     android:textAlignment="center"
-                    android:textSize="30sp" />
+                    android:textSize="24sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@{DateFormatUtils.format(viewmodel.recipies[recipieIndex].lastDate, `yyyy/MM/dd`)}" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -78,7 +79,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="TextView" />
+                        android:text="@{Long.toString(viewmodel.recipies[recipieIndex].count)}"/>
+
                 </LinearLayout>
 
                 <LinearLayout
