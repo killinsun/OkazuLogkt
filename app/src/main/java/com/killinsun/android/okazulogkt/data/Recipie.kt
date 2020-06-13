@@ -1,8 +1,10 @@
 package com.killinsun.android.okazulogkt.data
 
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
+import java.sql.Time
 import java.util.*
 
 data class Recipie (
@@ -15,10 +17,11 @@ data class Recipie (
 ) {
     companion object {
         fun mapping(result: DocumentSnapshot): Recipie {
+            val lastDateTs: Timestamp = result.get("lastDate") as Timestamp
             return Recipie(
                 result.id,
                 result.get("name") as String,
-                Date(),
+                lastDateTs.toDate(),
                 result.get("count") as Long,
                 result.get("favorited") as Boolean,
                 result.get("imageSrc") as String
