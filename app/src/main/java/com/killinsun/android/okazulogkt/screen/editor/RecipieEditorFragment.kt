@@ -2,6 +2,7 @@ package com.killinsun.android.okazulogkt.screen.editor
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,12 +54,11 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
 
     private fun assignRecipieToBinding(){
        if(args.recipieIndex != -1) {
-           sharedViewModel.recipies.value?.get(args.recipieIndex)?.let { viewModel.setRecipie(it) }
+           sharedViewModel.recipies.value?.get(args.recipieIndex)?.let { viewModel.setRecipie(it.copy()) }
        }
     }
 
     private fun onClickUpdateButton() {
-         // TODO: 逆方向のbindingがうまくいかないので各入力項目の.textの値を取得するように変更する
         sharedViewModel.onUpdate(args.recipieIndex, binding.viewmodel!!.edittingRecipie.value)
 
         hideKeyboard()

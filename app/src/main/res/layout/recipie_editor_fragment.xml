@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="@{viewmodel.edittingRecipie.name}"
+                    android:text="@={viewmodel.edittingRecipie.name}"
                     android:textSize="24sp" />
 
                 <LinearLayout
@@ -96,7 +96,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:text="@{Long.toString(viewmodel.edittingRecipie.count)}"
+                        android:text="@={`` + viewmodel.edittingRecipie.count}"
                         android:inputType="number" />
 
                 </LinearLayout>
