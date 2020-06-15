@@ -12,10 +12,43 @@
         <action
             android:id="@+id/action_okazuLogFragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_okazuLogFragment_to_recipieDetailFragment"
+            app:destination="@id/recipieDetailFragment" />
+        <action
+            android:id="@+id/action_okazuLogFragment_to_recipieEditor"
+            app:destination="@id/recipieEditor" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.killinsun.android.okazulogkt.screen.profile.ProfileFragment"
         android:label="profile_fragment"
         tools:layout="@layout/profile_fragment" />
+    <fragment
+        android:id="@+id/recipieDetailFragment"
+        android:name="com.killinsun.android.okazulogkt.screen.detail.RecipieDetailFragment"
+        android:label="recipie_detail_fragment"
+        tools:layout="@layout/recipie_detail_fragment" >
+        <argument
+            android:name="recipieIndex"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <action
+            android:id="@+id/action_recipieDetailFragment_to_recipieEditor"
+            app:destination="@id/recipieEditor"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipieEditor"
+        android:name="com.killinsun.android.okazulogkt.screen.editor.RecipieEditorFragment"
+        android:label="RecipieEditor" >
+        <argument
+            android:name="recipieIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_recipieEditor_to_recipieDetailFragment"
+            app:destination="@id/recipieDetailFragment"
+            app:popUpTo="@id/recipieDetailFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

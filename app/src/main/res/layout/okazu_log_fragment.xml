@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.killinsun.android.okazulogkt.screen.okazulog.OkazuLogViewModel" />
+            type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
 <!--        <import type="android.view.View"/>-->
 
     </data>
@@ -13,18 +13,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#EFEFEF"
         tools:context=".screen.okazulog.OkazuLogFragment">
 
-        <TextView
-            android:id="@+id/testEmailTextView"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/okazuLogRv"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@{viewmodel.userEmail}" />
+            android:layout_height="match_parent" />
 
-        <ListView
-            android:id="@+id/testListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"  />
 
     </FrameLayout>
 </layout>
