@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.databinding.RecipieDetailFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
@@ -27,8 +29,21 @@ class RecipieDetailFragment : Fragment() {
         binding.recipieIndex = args.recipieIndex
 
         Log.v("OkazuLog", sharedViewModel.recipies.value?.get(args.recipieIndex).toString())
+        binding.editBtn.setOnClickListener{ onClickEditButton() }
 
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.recipies.value?.get(args.recipieIndex)?.name
+    }
+
+    private fun onClickEditButton(){
+        findNavController().navigate(
+            RecipieDetailFragmentDirections.actionRecipieDetailFragmentToRecipieEditor(args.recipieIndex)
+        )
     }
 }
 

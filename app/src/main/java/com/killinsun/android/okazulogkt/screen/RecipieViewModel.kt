@@ -21,8 +21,8 @@ class RecipieViewModel: ViewModel() {
         RecipieRepository()
 
     // recipies
-    private var _recipies = MutableLiveData<List<Recipie>?>()
-    val recipies: LiveData<List<Recipie>?>
+    private var _recipies = MutableLiveData<MutableList<Recipie>?>()
+    val recipies: LiveData<MutableList<Recipie>?>
         get() = _recipies
 
     init {
@@ -40,6 +40,13 @@ class RecipieViewModel: ViewModel() {
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
+    }
+
+    fun onUpdate(index:Int, newRecipie: Recipie?) {
+        Log.v("OkazuLog", "newRecipie: ${newRecipie}")
+        if (newRecipie != null) {
+            _recipies.value?.set(index, newRecipie)
+        }
     }
 
 }

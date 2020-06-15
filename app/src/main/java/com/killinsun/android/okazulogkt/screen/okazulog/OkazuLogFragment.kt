@@ -3,6 +3,7 @@ package com.killinsun.android.okazulogkt.screen.okazulog
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -18,12 +19,13 @@ class OkazuLogFragment : Fragment() {
 
     private lateinit var binding: OkazuLogFragmentBinding
 
-     private val sharedViewModel: RecipieViewModel by activityViewModels()
+    private val sharedViewModel: RecipieViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         binding = OkazuLogFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
 
@@ -52,6 +54,8 @@ class OkazuLogFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        (activity as AppCompatActivity).supportActionBar?.title ="OkazuLog"
 
         binding.okazuLogRv.layoutManager = LinearLayoutManager(this.context)
 

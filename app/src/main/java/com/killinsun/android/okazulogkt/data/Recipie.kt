@@ -9,11 +9,11 @@ import java.util.*
 
 data class Recipie (
     val id: String = "",
-    val name: String = "",
-    val lastDate: Date = Date(),
-    val count: Long = 0,
-    val favorited: Boolean = false,
-    val imageSrc: String = "/noimage.jpg"
+    var name: String = "",
+    var lastDate: Date = Date(),
+    var count: Long = 0,
+    var favorited: Boolean = false,
+    var imageSrc: String = "/noimage.jpg"
 ) {
     companion object {
         fun mapping(result: DocumentSnapshot): Recipie {
@@ -27,12 +27,12 @@ data class Recipie (
                 result.get("imageSrc") as String
             )
         }
-        fun mapping(result: QuerySnapshot): List<Recipie> {
+        fun mapping(result: QuerySnapshot): MutableList<Recipie> {
             val recipies = mutableListOf<Recipie>()
             result.forEach {
                 recipies.add(mapping(it))
             }
-            return recipies.toList()
+            return recipies
         }
     }
 

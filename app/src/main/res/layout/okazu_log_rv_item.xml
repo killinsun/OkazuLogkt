@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="org.apache.commons.lang3.time.DateFormatUtils" />
         <variable name="viewmodel" type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
         <variable name="position" type="Integer" />
     </data>
@@ -11,14 +12,15 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/rv_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_weight="1"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp">
+        app:cardCornerRadius="0dp"
+        app:cardElevation="3dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="horizontal"
             android:weightSum="12">
 
@@ -26,19 +28,61 @@
             <ImageView
                 android:id="@+id/recipieImageIv"
                 android:layout_width="84dp"
-                android:layout_height="48dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:contentDescription="recipie image"
                 app:srcCompat="@android:drawable/sym_def_app_icon" />
 
-            <TextView
-                android:id="@+id/recipieNameTv"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="10"
-                android:text="@{viewmodel.recipies[position].name}"
-                android:textAlignment="viewStart"
-                android:textSize="24sp" />
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/recipieNameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@{viewmodel.recipies[position].name}"
+                    android:textAlignment="viewStart"
+                    android:textColor="@color/colorAccent"
+                    android:textSize="24sp"
+                    tools:text="hogehogehogehoge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="12">
+
+                    <TextView
+                        android:id="@+id/recipieLastDateTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@{DateFormatUtils.format(viewmodel.recipies[position].lastDate, `yyyy/MM/dd`)}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        tools:text="yyyy/mm/dd" />
+
+                    <TextView
+                        android:id="@+id/recipieCountTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{Long.toString(viewmodel.recipies[position].count)}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        tools:text="999" />
+                </LinearLayout>
+
+            </LinearLayout>
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

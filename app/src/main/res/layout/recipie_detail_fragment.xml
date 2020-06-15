@@ -5,7 +5,7 @@
 
     <data>
         <import type="org.apache.commons.lang3.time.DateFormatUtils" />
-        <variable
+         <variable
             name="viewmodel"
             type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
         <variable
@@ -96,11 +96,11 @@
                         android:text="@string/delete" />
 
                     <Button
-                        android:id="@+id/updateBtn"
+                        android:id="@+id/editBtn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/update" />
+                        android:text="@string/edit" />
                 </LinearLayout>
 
             </LinearLayout>

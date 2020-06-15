@@ -19,6 +19,7 @@ class RecipieRepository {
     suspend fun fetchAllRecipies(): QuerySnapshot {
         val querySnapshot = db.collection("recipies")
             .whereEqualTo("gId", "IDdexpFiBuPCWV5RexAD")
+            .orderBy("lastDate", Query.Direction.ASCENDING)
             .get()
             .await()
         return querySnapshot
