@@ -1,10 +1,12 @@
 package com.killinsun.android.okazulogkt.screen.editor
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -59,7 +61,7 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
          // TODO: 逆方向のbindingがうまくいかないので各入力項目の.textの値を取得するように変更する
         sharedViewModel.onUpdate(args.recipieIndex, binding.viewmodel!!.edittingRecipie.value)
 
-        //TODO: キーボード非表示にする
+        hideKeyboard()
 
         findNavController().navigate(
             RecipieEditorFragmentDirections.actionRecipieEditorToRecipieDetailFragment(args.recipieIndex)
@@ -73,6 +75,14 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
 
     override fun onSelected(year: Int, month: Int, dayOfMonth: Int){
         binding.viewmodel!!.onCalendarSelected(year, month, dayOfMonth )
+    }
+
+    private fun hideKeyboard() {
+        val view = activity?.currentFocus
+        if(view != null){
+            val manager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            manager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 
 }
