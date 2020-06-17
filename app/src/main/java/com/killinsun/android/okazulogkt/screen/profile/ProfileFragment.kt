@@ -3,6 +3,7 @@ package com.killinsun.android.okazulogkt.screen.profile
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,8 @@ import com.killinsun.android.okazulogkt.databinding.ProfileFragmentBinding
 import com.killinsun.android.okazulogkt.screen.MainActivity
 import com.killinsun.android.okazulogkt.screen.signin.SignInActivity
 import com.squareup.picasso.Picasso
+import io.wovn.wovnkt.Lang
+import io.wovn.wovnkt.Wovn
 import java.io.InputStream
 import java.net.URL
 
@@ -59,6 +62,10 @@ class ProfileFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
+        Wovn.changeLang(Lang.english)
+        view?.let { Wovn.translateView(it, "main") }
     }
 
 }
