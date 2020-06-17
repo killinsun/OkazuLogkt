@@ -49,4 +49,9 @@ class RecipieViewModel: ViewModel() {
         }
     }
 
+    fun onDelete(index: Int){
+        val deleteRecipie = _recipies.value?.get(index)
+        _recipies.value?.remove(deleteRecipie)
+    }
+
 }
