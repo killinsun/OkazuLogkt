@@ -17,6 +17,7 @@
     <string name="languages">言語</string>
     <string name="japanese">日本語</string>
     <string name="english">英語</string>
+    <string name="addRecipie">おかずを追加</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -33,6 +33,4 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
-
-    // TODO: FAB実装する
 }

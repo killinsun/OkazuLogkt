@@ -1,8 +1,10 @@
 package com.killinsun.android.okazulogkt.screen.okazulog
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -16,6 +18,7 @@ import com.killinsun.android.okazulogkt.databinding.OkazuLogFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
 import io.wovn.wovnkt.Lang
 import io.wovn.wovnkt.Wovn
+import kotlinx.android.synthetic.main.okazu_log_fragment.*
 
 class OkazuLogFragment : Fragment() {
 
@@ -71,6 +74,9 @@ class OkazuLogFragment : Fragment() {
                 )
             }
         })
+        fab.setOnClickListener{
+           Toast.makeText(activity, "Add tapped", Toast.LENGTH_SHORT) .show()
+        }
 
         Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
         Wovn.changeLang(Lang.english)
