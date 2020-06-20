@@ -38,6 +38,7 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
             lifecycleOwner = viewLifecycleOwner
         }
 
+        binding.addBtn.setOnClickListener{ onClickAddButton()}
         binding.updateBtn.setOnClickListener{ onClickUpdateButton()}
         binding.showDatePickerBtn.setOnClickListener { showDatePickerDialog()}
 
@@ -49,7 +50,13 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.recipies.value?.get(args.recipieIndex)?.name
+        if(args.recipieIndex != -1) {
+            (activity as AppCompatActivity).supportActionBar?.title =
+                sharedViewModel.recipies.value?.get(args.recipieIndex)?.name
+        } else {
+            (activity as AppCompatActivity).supportActionBar?.title = "新しいおかずを追加"
+
+        }
 
         assignRecipieToBinding()
 
@@ -63,6 +70,16 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
        if(args.recipieIndex != -1) {
            sharedViewModel.recipies.value?.get(args.recipieIndex)?.let { viewModel.setRecipie(it.copy()) }
        }
+    }
+
+    private fun onClickAddButton() {
+        val index = sharedViewModel.onCreate(binding.viewmodel!!.edittingRecipie.value)
+
+        hideKeyboard()
+
+        findNavController().navigate(
+            RecipieEditorFragmentDirections.actionRecipieEditorToRecipieDetailFragment(index)
+        )
     }
 
     private fun onClickUpdateButton() {

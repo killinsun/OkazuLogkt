@@ -42,6 +42,14 @@ class RecipieViewModel: ViewModel() {
         viewModelJob.cancel()
     }
 
+    fun onCreate(newRecipie: Recipie?): Int {
+        Log.v("OkazuLog", "newRecipie: ${newRecipie}")
+        if (newRecipie != null) {
+            _recipies.value?.add(newRecipie)
+        }
+        return _recipies.value!!.size - 1
+    }
+
     fun onUpdate(index:Int, newRecipie: Recipie?) {
         Log.v("OkazuLog", "newRecipie: ${newRecipie}")
         if (newRecipie != null) {

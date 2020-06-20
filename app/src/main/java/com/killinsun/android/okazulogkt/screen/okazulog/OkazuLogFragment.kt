@@ -74,13 +74,18 @@ class OkazuLogFragment : Fragment() {
                 )
             }
         })
-        fab.setOnClickListener{
-           Toast.makeText(activity, "Add tapped", Toast.LENGTH_SHORT) .show()
-        }
+
+        fab.setOnClickListener{ onClickFab(view) }
 
         Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
         Wovn.changeLang(Lang.english)
         view?.let { Wovn.translateView(it, "main") }
+    }
+
+    private fun onClickFab(view: View){
+        view.findNavController().navigate(
+            OkazuLogFragmentDirections.actionOkazuLogFragmentToRecipieEditor(-1)
+        )
     }
 
 }

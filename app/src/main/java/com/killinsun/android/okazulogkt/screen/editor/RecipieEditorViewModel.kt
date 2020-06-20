@@ -12,6 +12,10 @@ class RecipieEditorViewModel : ViewModel() {
     val edittingRecipie: LiveData<Recipie>
         get() = _edittingRecipie
 
+    init {
+        _edittingRecipie.value = Recipie()
+    }
+
     fun setRecipie(recipie: Recipie) {
         _edittingRecipie.value = recipie
     }
