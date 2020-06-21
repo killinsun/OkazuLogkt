@@ -16,6 +16,7 @@ class RecipieRepository {
         FirebaseFirestore.getInstance()
     }
 
+
     suspend fun fetchAllRecipies(): QuerySnapshot {
         val querySnapshot = db.collection("recipies")
             .whereEqualTo("gId", "IDdexpFiBuPCWV5RexAD")
@@ -23,6 +24,34 @@ class RecipieRepository {
             .get()
             .await()
         return querySnapshot
+    }
+
+    fun createNewRecipie(recipie: Recipie): String{
+       val recipieRef = db.collection("recipies").document()
+
+        recipie.id = recipieRef.id
+        recipie.gId = "IDdexpFiBuPCWV5RexAD"
+        Log.v("OkazuLog", "new recipie ID: ${recipieRef.id}")
+        db.collection("recipies")
+            .document(recipieRef.id)
+            .set(recipie.getByHashMap())
+            .addOnSuccessListener {
+                Log.v("OkazuLog", "recipie id: ${recipieRef.id} added succcessfully.")
+            }
+            .addOnFailureListener{ e ->
+                Log.w("OkazuLog", "Error adding document", e)
+            }
+
+        return recipieRef.id
+    }
+
+    suspend fun deleteRecipie(recipieId: String) {
+        db.collection("recipies")
+            .document(recipieId)
+            .delete()
+            .addOnSuccessListener { Log.v("OkazuLog", "recipie id: ${recipieId} delete successfully.") }
+            .addOnFailureListener{ e->  Log.w("OkazuLog", "Error deleting document", e)}
+            .await()
     }
 
 //    suspend fun fetchAllRecipies(): List<Recipie>? {

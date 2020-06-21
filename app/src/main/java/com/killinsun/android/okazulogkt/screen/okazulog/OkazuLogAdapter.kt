@@ -44,6 +44,7 @@ class OkazuLogAdapter (
 
         holder.binding.viewmodel = viewModel
         holder.binding.position = position
+        Log.v("OkazuLog", "${position} :" + viewModel.recipies.value?.get(position).toString())
         holder.binding.rvItem.setOnClickListener {
             listener.onClick(it, position)
         }

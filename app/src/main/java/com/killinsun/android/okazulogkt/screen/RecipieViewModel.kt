@@ -6,10 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.killinsun.android.okazulogkt.data.Recipie
 import com.killinsun.android.okazulogkt.data.repository.RecipieRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class RecipieViewModel: ViewModel() {
 
@@ -43,9 +40,15 @@ class RecipieViewModel: ViewModel() {
     }
 
     fun onCreate(newRecipie: Recipie?): Int {
-        Log.v("OkazuLog", "newRecipie: ${newRecipie}")
-        if (newRecipie != null) {
-            _recipies.value?.add(newRecipie)
+        val newRecipies:MutableList<Recipie> = _recipies.value ?: arrayListOf()
+        runBlocking {
+            if (newRecipie != null) {
+                newRecipie.id = firestore.createNewRecipie(newRecipie)
+                newRecipies.add(newRecipie)
+                _recipies.postValue(newRecipies)
+            }else{
+                Log.v("OkazuLog" ,"newrecipie is null")
+            }
         }
         return _recipies.value!!.size - 1
     }
@@ -59,6 +62,13 @@ class RecipieViewModel: ViewModel() {
 
     fun onDelete(index: Int){
         val deleteRecipie = _recipies.value?.get(index)
+        val newRecipies:MutableList<Recipie> = _recipies.value ?: arrayListOf()
+        uiScope.launch {
+            if (deleteRecipie != null) {
+                firestore.deleteRecipie(deleteRecipie.id)
+            }
+            newRecipies.remove(deleteRecipie)
+        }
         _recipies.value?.remove(deleteRecipie)
     }
 

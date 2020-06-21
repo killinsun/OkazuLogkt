@@ -31,8 +31,9 @@ class RecipieDetailFragment : Fragment() {
         binding = RecipieDetailFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
         binding.recipieIndex = args.recipieIndex
+        Log.v("OkazuLog","args: ${args.recipieIndex}")
+        Log.v("OkazuLog","RecipieDetailFragment RecipieViewModel index: ${sharedViewModel.recipies.value!!.size}")
 
-        Log.v("OkazuLog", sharedViewModel.recipies.value?.get(args.recipieIndex).toString())
         binding.editBtn.setOnClickListener{ onClickEditButton() }
         binding.deleteBtn.setOnClickListener { onClickDeleteButton()  }
 
