@@ -49,7 +49,7 @@
         <action
             android:id="@+id/action_recipieEditor_to_recipieDetailFragment"
             app:destination="@id/recipieDetailFragment"
-            app:popUpTo="@id/recipieDetailFragment"
-            app:popUpToInclusive="true" />
+            app:popUpTo="@id/okazuLogFragment"
+            app:popUpToInclusive="false" />
     </fragment>
 </navigation>
