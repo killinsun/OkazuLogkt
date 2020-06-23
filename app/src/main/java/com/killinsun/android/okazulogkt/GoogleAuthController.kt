@@ -12,9 +12,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
-const val RC_SIGN_IN:Int = 2551
 
 class GoogleAuthController(private val activity: AppCompatActivity) {
+    val RC_SIGN_IN:Int = 2551
+
     private var completed: (FirebaseUser) -> (Unit) = {}
 
     private val firebaseAuth: FirebaseAuth by lazy {
@@ -41,6 +42,7 @@ class GoogleAuthController(private val activity: AppCompatActivity) {
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){
         if (requestCode != RC_SIGN_IN) {
+            Log.v("GoogleAuthController", "Result code was not matched. ${requestCode} ${RC_SIGN_IN}")
             return
         }
 
@@ -55,7 +57,7 @@ class GoogleAuthController(private val activity: AppCompatActivity) {
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
-        Log.v("GoogleAuthController", "idToken" + account.idToken.toString())
+        Log.v("GoogleAuthController", "idToken " + account.idToken.toString())
         val credential = GoogleAuthProvider.getCredential(account.idToken, null)
         firebaseAuth.signInWithCredential(credential).addOnCompleteListener(activity) { task ->
             if(!task.isSuccessful){

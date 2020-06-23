@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/okazuLogFragment">
+    app:startDestination="@id/signInFragment">
 
     <fragment
         android:id="@+id/okazuLogFragment"
@@ -24,7 +24,11 @@
         android:id="@+id/profileFragment"
         android:name="com.killinsun.android.okazulogkt.screen.profile.ProfileFragment"
         android:label="profile_fragment"
-        tools:layout="@layout/profile_fragment" />
+        tools:layout="@layout/profile_fragment" >
+        <action
+            android:id="@+id/action_profileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipieDetailFragment"
         android:name="com.killinsun.android.okazulogkt.screen.detail.RecipieDetailFragment"
@@ -51,5 +55,16 @@
             app:destination="@id/recipieDetailFragment"
             app:popUpTo="@id/okazuLogFragment"
             app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.killinsun.android.okazulogkt.screen.signin.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_okazuLogFragment"
+            app:destination="@id/okazuLogFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

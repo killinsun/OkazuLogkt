@@ -1,7 +1,5 @@
 package com.killinsun.android.okazulogkt.screen.profile
 
-import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,15 +8,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.killinsun.android.okazulogkt.GoogleAuthController
 import com.killinsun.android.okazulogkt.databinding.ProfileFragmentBinding
-import com.killinsun.android.okazulogkt.screen.MainActivity
-import com.killinsun.android.okazulogkt.screen.signin.SignInActivity
+import com.killinsun.android.okazulogkt.screen.editor.RecipieEditorFragmentDirections
 import com.squareup.picasso.Picasso
 import io.wovn.wovnkt.Lang
 import io.wovn.wovnkt.Wovn
-import java.io.InputStream
-import java.net.URL
 
 
 class ProfileFragment : Fragment() {
@@ -51,13 +47,13 @@ class ProfileFragment : Fragment() {
 
     private fun onLogout(){
         googleAuthController.startSignOut()
-        intentToSignIn()
+        navigateToSignIn()
     }
 
-    private fun intentToSignIn() {
-        val signInIntent = Intent(activity, SignInActivity::class.java)
-        signInIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
-        startActivity(signInIntent)
+    private fun navigateToSignIn() {
+        findNavController().navigate(
+            ProfileFragmentDirections.actionProfileFragmentToSignInFragment()
+        )
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
