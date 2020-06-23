@@ -54,9 +54,11 @@ class RecipieViewModel: ViewModel() {
     }
 
     fun onUpdate(index:Int, newRecipie: Recipie?) {
-        Log.v("OkazuLog", "newRecipie: ${newRecipie}")
-        if (newRecipie != null) {
-            _recipies.value?.set(index, newRecipie)
+        runBlocking {
+            if (newRecipie != null) {
+                firestore.updateRecipie(newRecipie)
+                _recipies.value?.set(index, newRecipie)
+            }
         }
     }
 

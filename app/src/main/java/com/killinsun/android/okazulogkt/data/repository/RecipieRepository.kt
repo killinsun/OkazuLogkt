@@ -4,6 +4,7 @@ import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
+import com.google.firebase.firestore.SetOptions
 import com.killinsun.android.okazulogkt.data.Recipie
 import kotlinx.coroutines.tasks.await
 
@@ -43,6 +44,18 @@ class RecipieRepository {
             }
 
         return recipieRef.id
+    }
+
+    fun updateRecipie(recipie: Recipie) {
+        db.collection("recipies").document(recipie.id)
+            .set(recipie, SetOptions.merge())
+            .addOnSuccessListener {
+                Log.v("OkazuLog", "recipie id: ${recipie.id} updated succcessfully.")
+            }
+            .addOnFailureListener{ e ->
+                Log.w("OkazuLog", "Error updating document", e)
+            }
+
     }
 
     suspend fun deleteRecipie(recipieId: String) {
