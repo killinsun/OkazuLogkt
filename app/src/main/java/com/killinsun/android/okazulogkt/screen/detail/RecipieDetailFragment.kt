@@ -14,8 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.databinding.RecipieDetailFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
-import io.wovn.wovnkt.Lang
-import io.wovn.wovnkt.Wovn
 
 class RecipieDetailFragment : Fragment() {
 
@@ -45,9 +43,6 @@ class RecipieDetailFragment : Fragment() {
 
         (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.recipies.value?.get(args.recipieIndex)?.name
 
-        Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
-        Wovn.changeLang(Lang.japanese)
-        view?.let { Wovn.translateView(it, "main") }
     }
 
     private fun onClickEditButton(){

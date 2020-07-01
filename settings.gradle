@@ -1,3 +1,2 @@
-include ':wovnkt'
 rootProject.name='OkazuLogkt'
 include ':app'

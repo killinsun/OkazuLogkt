@@ -13,8 +13,6 @@ import com.killinsun.android.okazulogkt.GoogleAuthController
 import com.killinsun.android.okazulogkt.databinding.ProfileFragmentBinding
 import com.killinsun.android.okazulogkt.screen.editor.RecipieEditorFragmentDirections
 import com.squareup.picasso.Picasso
-import io.wovn.wovnkt.Lang
-import io.wovn.wovnkt.Wovn
 
 
 class ProfileFragment : Fragment() {
@@ -59,9 +57,6 @@ class ProfileFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
-        Wovn.changeLang(Lang.english)
-        view?.let { Wovn.translateView(it, "main") }
     }
 
 }

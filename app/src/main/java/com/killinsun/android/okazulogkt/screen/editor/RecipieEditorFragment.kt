@@ -17,8 +17,6 @@ import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.data.Recipie
 import com.killinsun.android.okazulogkt.databinding.RecipieEditorFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
-import io.wovn.wovnkt.Lang
-import io.wovn.wovnkt.Wovn
 
 class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
 
@@ -59,10 +57,6 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
         }
 
         assignRecipieToBinding()
-
-        Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
-        Wovn.changeLang(Lang.english)
-        view?.let { Wovn.translateView(it, "main") }
 
     }
 

@@ -16,8 +16,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.killinsun.android.okazulogkt.R
 import com.killinsun.android.okazulogkt.databinding.OkazuLogFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
-import io.wovn.wovnkt.Lang
-import io.wovn.wovnkt.Wovn
 import kotlinx.android.synthetic.main.okazu_log_fragment.*
 
 class OkazuLogFragment : Fragment() {
@@ -66,10 +64,6 @@ class OkazuLogFragment : Fragment() {
         })
 
         fab.setOnClickListener{ onClickFab(view) }
-
-        Log.v("OkazuLog", "${Wovn.getCurrentLang()}")
-        Wovn.changeLang(Lang.english)
-        view?.let { Wovn.translateView(it, "main") }
     }
 
     private fun onClickFab(view: View){
