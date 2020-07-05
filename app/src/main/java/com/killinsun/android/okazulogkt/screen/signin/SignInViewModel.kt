@@ -1,5 +1,6 @@
 package com.killinsun.android.okazulogkt.screen.signin
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,6 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
 class SignInViewModel: ViewModel() {
-    private var viewModelJob = Job()
 
     val userRepository: UserRepository = UserRepository()
 
@@ -28,6 +28,7 @@ class SignInViewModel: ViewModel() {
     var isLogin: Boolean = false
 
     init{
+        Log.v("OkazuLog", "signInViewModel created")
         _fbUser.value = FirebaseAuth.getInstance().currentUser
         if(_fbUser.value?.uid != null) {
             isLogin = true

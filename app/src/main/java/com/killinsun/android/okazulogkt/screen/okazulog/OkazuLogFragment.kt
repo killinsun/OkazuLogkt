@@ -35,8 +35,6 @@ class OkazuLogFragment : Fragment() {
         binding.viewmodel!!.recipies.observe(viewLifecycleOwner, Observer {
             val adapter = binding.okazuLogRv.adapter as OkazuLogAdapter?
             adapter?.setItem(it!!)
-            Log.v("OkazuLog","Observe event!")
-            Log.v("OkazuLog","args: ${sharedViewModel.recipies.value!!.size}")
         })
         this.binding = binding
 
