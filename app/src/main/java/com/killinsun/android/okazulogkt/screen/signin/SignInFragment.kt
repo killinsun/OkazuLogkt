@@ -8,21 +8,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProviders
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.killinsun.android.okazulogkt.GoogleAuthController
-import com.killinsun.android.okazulogkt.R
 import com.killinsun.android.okazulogkt.databinding.ActivitySignInBinding
 
 class SignInFragment : Fragment() {
 
-    private val viewModel: SignInViewModel by viewModels()
+    private val viewModel: SignInViewModel by activityViewModels()
     private lateinit var binding: ActivitySignInBinding
 
     private val googleAuthController: GoogleAuthController by lazy {
-        GoogleAuthController(activity as AppCompatActivity)
+        GoogleAuthController(activity as AppCompatActivity, this)
     }
 
     override fun onCreateView(
@@ -31,9 +29,10 @@ class SignInFragment : Fragment() {
     ): View? {
         binding = ActivitySignInBinding.inflate(layoutInflater)
 
-        if(viewModel.isLogin) {
-            navigateToOkazuLog()
-        }
+        viewModel.onLogin()
+        viewModel.user.observe(viewLifecycleOwner, Observer {
+            navigateToOkazuLog(viewModel.user.value?.id, viewModel.user.value?.gId)
+        })
 
         binding.signInButton.setOnClickListener { onLogin() }
         binding.signOutButton.setOnClickListener { onLogout() }
@@ -43,18 +42,26 @@ class SignInFragment : Fragment() {
         return binding.root
     }
 
-    private fun navigateToOkazuLog(){
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        googleAuthController.onActivityResult(requestCode, resultCode, data)
+    }
+
+    fun navigateToOkazuLog( id: String?, gId: String?){
+        if(id == null || gId == null) return
+        Log.v("OkazuLog", "navigate ${id} ${gId}")
         findNavController().navigate(
-            SignInFragmentDirections.actionSignInFragmentToOkazuLogFragment()
+            SignInFragmentDirections.actionSignInFragmentToOkazuLogFragment(
+                id,
+                gId
+            )
         )
+        Log.v("OkazuLog", "navigate end")
     }
 
     private fun onLogin(){
         googleAuthController.startSignIn{
             viewModel.onLogin()
-            Log.i("SignInFragment", "Logged In! email: " + viewModel.userEmail.value)
-            navigateToOkazuLog()
-
         }
     }
 

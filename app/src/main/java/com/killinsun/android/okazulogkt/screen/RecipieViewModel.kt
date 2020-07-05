@@ -4,8 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.killinsun.android.okazulogkt.data.Recipie
+import com.killinsun.android.okazulogkt.data.User
 import com.killinsun.android.okazulogkt.data.repository.RecipieRepository
+import com.killinsun.android.okazulogkt.data.repository.UserRepository
 import kotlinx.coroutines.*
 
 class RecipieViewModel: ViewModel() {
@@ -17,19 +22,33 @@ class RecipieViewModel: ViewModel() {
     val firestore: RecipieRepository =
         RecipieRepository()
 
+    val userRepository: UserRepository =
+        UserRepository()
+
     // recipies
     private var _recipies = MutableLiveData<MutableList<Recipie>?>()
     val recipies: LiveData<MutableList<Recipie>?>
         get() = _recipies
 
+    private val fbUser = FirebaseAuth.getInstance().currentUser
+
+    private val _user = MutableLiveData<User>()
+    val user: LiveData<User>
+        get() = _user
+
+
     init {
-        initializeRecipies()
-        Log.v("OkazuLog", "ViewModel RecipieViewModel initialized!")
+        viewModelScope.launch {
+            if (fbUser != null) {
+                _user.value = userRepository.fetchUser(fbUser.uid)
+            }
+        }
     }
 
-    private fun initializeRecipies() {
-        uiScope.launch {
-            val querySnapshot = firestore.fetchAllRecipies()
+    fun initializeRecipies(gId: String?) {
+        if(gId == null) return
+        viewModelScope.launch {
+            val querySnapshot = firestore.fetchAllRecipies(gId)
             _recipies.postValue(Recipie.mapping(querySnapshot))
         }
     }
@@ -42,8 +61,9 @@ class RecipieViewModel: ViewModel() {
     fun onCreate(newRecipie: Recipie?): Int {
         val newRecipies:MutableList<Recipie> = _recipies.value ?: arrayListOf()
         runBlocking {
+            Log.v("OkazuLog", "${newRecipies.size}")
             if (newRecipie != null) {
-                newRecipie.id = firestore.createNewRecipie(newRecipie)
+                newRecipie.id = firestore.createNewRecipie(newRecipie, _user.value!!.gId)
                 newRecipies.add(newRecipie)
                 _recipies.postValue(newRecipies)
             }else{

@@ -21,7 +21,7 @@ class ProfileFragment : Fragment() {
     private lateinit var viewModel: ProfileViewModel
 
     private val googleAuthController: GoogleAuthController by lazy {
-        GoogleAuthController(activity as AppCompatActivity)
+        GoogleAuthController(activity as AppCompatActivity, this)
     }
 
     override fun onCreateView(

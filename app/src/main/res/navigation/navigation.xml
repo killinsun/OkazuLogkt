@@ -19,6 +19,12 @@
             android:id="@+id/action_okazuLogFragment_to_recipieEditor"
             app:destination="@id/recipieEditor"
             app:popUpToInclusive="false" />
+        <argument
+            android:name="uId"
+            app:argType="string" />
+        <argument
+            android:name="gId"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/profileFragment"

@@ -3,6 +3,7 @@ package com.killinsun.android.okazulogkt
 import android.content.Intent
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -13,7 +14,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 
 
-class GoogleAuthController(private val activity: AppCompatActivity) {
+class GoogleAuthController(private val activity: AppCompatActivity, private val fragment: Fragment) {
     val RC_SIGN_IN:Int = 2551
 
     private var completed: (FirebaseUser) -> (Unit) = {}
@@ -37,7 +38,8 @@ class GoogleAuthController(private val activity: AppCompatActivity) {
     fun startSignIn(completed: (FirebaseUser) -> (Unit)) {
         this.completed = completed
         val signInIntent = googleSignInClient.signInIntent
-        activity.startActivityForResult(signInIntent, RC_SIGN_IN)
+        fragment.startActivityForResult(signInIntent, RC_SIGN_IN)
+        // activity.startActivityForResult(signInIntent, RC_SIGN_IN)
     }
 
     fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?){

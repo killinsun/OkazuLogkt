@@ -1,19 +1,15 @@
 package com.killinsun.android.okazulogkt.screen.okazulog
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.LinearLayoutManager
 
-import com.killinsun.android.okazulogkt.R
 import com.killinsun.android.okazulogkt.databinding.OkazuLogFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
 import kotlinx.android.synthetic.main.okazu_log_fragment.*
@@ -31,6 +27,10 @@ class OkazuLogFragment : Fragment() {
 
         binding = OkazuLogFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
+
+        sharedViewModel.user.observe(viewLifecycleOwner, Observer {
+            sharedViewModel.initializeRecipies(sharedViewModel.user.value?.gId)
+        })
 
         binding.viewmodel!!.recipies.observe(viewLifecycleOwner, Observer {
             val adapter = binding.okazuLogRv.adapter as OkazuLogAdapter?

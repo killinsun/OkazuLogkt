@@ -18,21 +18,20 @@ class RecipieRepository {
     }
 
 
-    suspend fun fetchAllRecipies(): QuerySnapshot {
+    suspend fun fetchAllRecipies(gId: String): QuerySnapshot {
         val querySnapshot = db.collection("recipies")
-            .whereEqualTo("gId", "IDdexpFiBuPCWV5RexAD")
+            .whereEqualTo("gId", gId)
             .orderBy("lastDate", Query.Direction.ASCENDING)
             .get()
             .await()
         return querySnapshot
     }
 
-    fun createNewRecipie(recipie: Recipie): String{
+    fun createNewRecipie(recipie: Recipie, gId: String): String{
        val recipieRef = db.collection("recipies").document()
 
         recipie.id = recipieRef.id
-        recipie.gId = "IDdexpFiBuPCWV5RexAD"
-        Log.v("OkazuLog", "new recipie ID: ${recipieRef.id}")
+        recipie.gId = gId
         db.collection("recipies")
             .document(recipieRef.id)
             .set(recipie.getByHashMap())

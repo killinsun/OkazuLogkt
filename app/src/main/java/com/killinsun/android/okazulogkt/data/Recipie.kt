@@ -41,7 +41,7 @@ data class Recipie (
     fun getByHashMap(): HashMap<String, Any>{
         return hashMapOf(
             "id" to this.id,
-            "gId" to "IDdexpFiBuPCWV5RexAD",
+            "gId" to this.gId,
             "name" to this.name,
             "lastDate" to this.lastDate,
             "count" to this.count,
