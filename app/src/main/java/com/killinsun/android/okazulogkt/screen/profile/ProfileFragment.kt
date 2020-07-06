@@ -7,18 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.killinsun.android.okazulogkt.GoogleAuthController
 import com.killinsun.android.okazulogkt.databinding.ProfileFragmentBinding
 import com.killinsun.android.okazulogkt.screen.editor.RecipieEditorFragmentDirections
+import com.killinsun.android.okazulogkt.screen.editor.RecipieEditorViewModel
 import com.squareup.picasso.Picasso
 
 
 class ProfileFragment : Fragment() {
 
     private lateinit var binding: ProfileFragmentBinding
-    private lateinit var viewModel: ProfileViewModel
+    private val viewModel: ProfileViewModel by viewModels()
 
     private val googleAuthController: GoogleAuthController by lazy {
         GoogleAuthController(activity as AppCompatActivity, this)
@@ -28,7 +30,6 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewModel = ViewModelProviders.of(this).get(ProfileViewModel::class.java)
 
         binding = ProfileFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = viewModel
