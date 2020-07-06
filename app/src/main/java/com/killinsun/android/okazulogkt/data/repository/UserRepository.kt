@@ -22,7 +22,47 @@ class UserRepository {
             .get()
             .await()
         Log.v("OkazuLog", "fetch complete")
-        return User.mapping(docRef)
+        return if(docRef.data == null) {
+            Log.v("OkazuLog", "user was null")
+            createUser(userId)
+        }else {
+            User.mapping(docRef)
+        }
+    }
+
+    suspend fun createUser(userId: String): User {
+        val fbUser = FirebaseAuth.getInstance().currentUser
+            ?: throw Error("You are not signed in now.")
+
+        val groupData = hashMapOf(
+            "name" to "test"
+        )
+        Log.v("OkazuLog", "Create a new user")
+        val userRef = db.collection("users").document(userId)
+        val groupRef = db.collection("groups").document()
+
+        val user = User(
+            id = fbUser.uid,
+            gId = groupRef.id,
+            displayName = fbUser.displayName,
+            email = fbUser.email,
+            isAdmin = false
+        )
+
+        groupRef.set(groupData).await()
+
+        db.collection("users")
+            .document(userRef.id)
+            .set(user.getByHashMap())
+            .addOnSuccessListener {
+                Log.v("OkazuLog", "user id : ${userRef.id} added successfully")
+            }
+            .addOnFailureListener { e ->
+                Log.w("OkazuLog", "Error adding document", e)
+            }
+            .await()
+
+        return user
     }
 
 }
