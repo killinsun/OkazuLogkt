@@ -14,7 +14,8 @@ data class Recipie (
     var lastDate: Date = Date(),
     var count: Long = 0,
     var favorited: Boolean = false,
-    var imageSrc: String = "/noimage.jpg"
+    var imageSrc: String? = "/noimage.jpg",
+    var detail: String? = ""
 ) {
     companion object {
         fun mapping(result: DocumentSnapshot): Recipie {
@@ -26,7 +27,8 @@ data class Recipie (
                 lastDateTs.toDate(),
                 result.get("count") as Long,
                 result.get("favorited") as Boolean,
-                result.get("imageSrc") as String
+                result.get("imageSrc") as String? ?: "/noimage.jpg",
+                result.get("detail") as String? ?: ""
             )
         }
         fun mapping(result: QuerySnapshot): MutableList<Recipie> {
@@ -38,7 +40,7 @@ data class Recipie (
         }
     }
 
-    fun getByHashMap(): HashMap<String, Any>{
+    fun getByHashMap(): HashMap<String, Any?>{
         return hashMapOf(
             "id" to this.id,
             "gId" to this.gId,
@@ -46,7 +48,8 @@ data class Recipie (
             "lastDate" to this.lastDate,
             "count" to this.count,
             "favorited" to this.favorited,
-            "imageSrc" to this.imageSrc
+            "imageSrc" to this.imageSrc,
+            "detail" to this.detail
         )
     }
 
@@ -57,7 +60,8 @@ data class Recipie (
                 "lastDate: ${this.lastDate}," +
                 "CookCount: ${this.count}," +
                 "Favorited: ${this.favorited}," +
-                "ImageSrc: ${this.imageSrc} "
+                "ImageSrc: ${this.imageSrc}, " +
+                "Detail: ${this.detail}"
     }
 }
 
