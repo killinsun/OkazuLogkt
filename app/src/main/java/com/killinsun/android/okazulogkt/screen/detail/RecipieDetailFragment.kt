@@ -2,6 +2,7 @@ package com.killinsun.android.okazulogkt.screen.detail
 
 import android.content.DialogInterface
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,6 +35,8 @@ class RecipieDetailFragment : Fragment() {
 
         binding.editBtn.setOnClickListener{ onClickEditButton() }
         binding.deleteBtn.setOnClickListener { onClickDeleteButton()  }
+
+        binding.recipieDetailTv.movementMethod = ScrollingMovementMethod()
 
         return binding.root
     }
