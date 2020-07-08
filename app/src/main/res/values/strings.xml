@@ -8,9 +8,12 @@
     <string name="gId_label">Group ID</string>
     <string name="profile">プロフィール</string>
     <string name="okazulog">OkazuLog</string>
+    <string name="category">カテゴリ</string>
+    <string name="tags">タグ</string>
     <string name="lastCookedDay">最後に作った日</string>
     <string name="cookedCount">作った回数</string>
     <string name="recipieDetail">詳細</string>
+    <string name="add">追加</string>
     <string name="delete">削除</string>
     <string name="update">更新</string>
     <string name="edit">編集</string>

@@ -15,7 +15,8 @@ data class Recipie (
     var count: Long = 0,
     var favorited: Boolean = false,
     var imageSrc: String? = "/noimage.jpg",
-    var detail: String? = ""
+    var detail: String? = "",
+    var categoryId: String? = ""
 ) {
     companion object {
         fun mapping(result: DocumentSnapshot): Recipie {
@@ -28,7 +29,8 @@ data class Recipie (
                 result.get("count") as Long,
                 result.get("favorited") as Boolean,
                 result.get("imageSrc") as String? ?: "/noimage.jpg",
-                result.get("detail") as String? ?: ""
+                result.get("detail") as String? ?: "",
+                result.get("categoryId") as String? ?: ""
             )
         }
         fun mapping(result: QuerySnapshot): MutableList<Recipie> {
@@ -49,7 +51,8 @@ data class Recipie (
             "count" to this.count,
             "favorited" to this.favorited,
             "imageSrc" to this.imageSrc,
-            "detail" to this.detail
+            "detail" to this.detail,
+            "categoryId" to this.categoryId
         )
     }
 
@@ -61,7 +64,8 @@ data class Recipie (
                 "CookCount: ${this.count}," +
                 "Favorited: ${this.favorited}," +
                 "ImageSrc: ${this.imageSrc}, " +
-                "Detail: ${this.detail}"
+                "Detail: ${this.detail}, " +
+                "CategoryId: ${this.categoryId}"
     }
 }
 
