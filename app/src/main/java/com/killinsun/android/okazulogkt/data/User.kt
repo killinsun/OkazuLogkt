@@ -8,7 +8,7 @@ data class User(
     var gId: String = "",
     var displayName: String? = "",
     var email: String? = "",
-    var isAdmin: Boolean = false
+    var isAdmin: Boolean? = false
 ){
     companion object {
         fun mapping(result: DocumentSnapshot): User {
@@ -21,9 +21,9 @@ data class User(
             return User(
                 result.id,
                 gId,
-                result.get("displayName") as String,
-                result.get("email") as String,
-                result.get("isAdmin") as Boolean
+                result.get("displayName") as String?,
+                result.get("email") as String?,
+                result.get("isAdmin") as Boolean?
             )
         }
     }
