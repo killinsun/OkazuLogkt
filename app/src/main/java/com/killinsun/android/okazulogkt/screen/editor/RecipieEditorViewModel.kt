@@ -27,7 +27,7 @@ class RecipieEditorViewModel : ViewModel() {
         get() = _edittingRecipie
 
     init {
-        _edittingRecipie.value = Recipie()
+        _edittingRecipie.value = Recipie(count = 1)
     }
 
     fun setRecipie(recipie: Recipie) {
