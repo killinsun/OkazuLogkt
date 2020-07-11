@@ -1,10 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:id="@+id/profileFragment"
-        android:title="@string/profile" />
-    <item
-        android:id="@+id/okazuLogFragment"
-        android:title="@string/okazulog" />
+    <group  android:checkableBehavior="single">
+        <item
+            android:id="@+id/profileFragment"
+            android:title="@string/profile" />
+        <item
+            android:id="@+id/okazuLogFragment"
+            android:title="@string/okazulog" />
+    </group>
+
+    <item android:title="言語">
+        <menu>
+            <item
+                android:id="@+id/langJapanese"
+                android:title="日本語" />
+            <item
+                android:id="@+id/langEnglish"
+                android:title="英語" />
+        </menu>
+    </item>
 </menu>
