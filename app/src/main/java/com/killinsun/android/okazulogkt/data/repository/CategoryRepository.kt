@@ -2,6 +2,7 @@ package com.killinsun.android.okazulogkt.data.repository
 
 import android.util.Log
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.killinsun.android.okazulogkt.data.Category
 import kotlinx.coroutines.tasks.await
@@ -15,6 +16,7 @@ class CategoryRepository {
     suspend fun fetchAllCategories(gId: String): QuerySnapshot {
         val querySnapshot = db.collection("categories")
             .whereEqualTo("gId", gId)
+            .orderBy("timestamp", Query.Direction.ASCENDING)
             .get()
             .await()
         return querySnapshot

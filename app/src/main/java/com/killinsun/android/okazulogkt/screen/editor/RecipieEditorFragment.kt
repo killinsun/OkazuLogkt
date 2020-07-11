@@ -8,17 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.AdapterView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.killinsun.android.okazulogkt.data.Recipie
+import com.killinsun.android.okazulogkt.R
 import com.killinsun.android.okazulogkt.databinding.RecipieEditorFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
 
-class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
+class RecipieEditorFragment :
+    Fragment(),
+    DatePick.OnDateSelectedListener,
+    CatAddDialogFragment.OnClickAddButtonListener{
 
     private lateinit var binding: RecipieEditorFragmentBinding
 
@@ -36,9 +40,35 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
             lifecycleOwner = viewLifecycleOwner
         }
 
-        binding.addBtn.setOnClickListener{ onClickAddButton()}
-        binding.updateBtn.setOnClickListener{ onClickUpdateButton()}
-        binding.showDatePickerBtn.setOnClickListener { showDatePickerDialog()}
+        binding.viewmodel!!.fetchCategories(sharedViewModel.user.value?.gId)
+
+        binding.viewmodel!!.categories.observe(viewLifecycleOwner, Observer{
+            if(it != null) {
+                val categoryAdapter: CategoryAdapter = CategoryAdapter(context, it)
+                binding.categorySpinner.adapter = categoryAdapter
+
+                Log.v("OkazuLog", "vm category id : ${viewModel.category.id}")
+                val position = viewModel.category.getPositionById(viewModel.categories.value, viewModel.category.id)
+                Log.v("OkazuLog", "category position is $position")
+                binding.categorySpinner.setSelection(position)
+            }
+        })
+
+        binding.categorySpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(_p0: AdapterView<*>?, _p1: View?, position: Int, _p3: Long) {
+                viewModel.let {
+                    it.edittingRecipie.value?.categoryId = it.categories.value?.get(position)?.id
+                }
+            }
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+            }
+        }
+
+        binding.addBtn.setOnClickListener{ onClickAddButton() }
+        binding.addCategoryBtn.setOnClickListener{ onClickCatAddButton() }
+        binding.updateBtn.setOnClickListener{ onClickUpdateButton() }
+        binding.showDatePickerBtn.setOnClickListener { showDatePickerDialog() }
+
 
         assignRecipieToBinding()
 
@@ -84,6 +114,24 @@ class RecipieEditorFragment : Fragment(), DatePick.OnDateSelectedListener{
         findNavController().navigate(
             RecipieEditorFragmentDirections.actionRecipieEditorToRecipieDetailFragment(args.recipieIndex)
         )
+    }
+
+    private fun onClickCatAddButton() {
+        val dialogFragment = CatAddDialogFragment(
+            getString(R.string.addCategory),
+            getString(R.string.dscCategory),
+            getString(R.string.add),
+            getString(R.string.cancel)
+        )
+        childFragmentManager?.run {
+            dialogFragment.show(this, "CategoryAddDialog")
+        }
+
+    }
+
+    override fun onClickDialogPositiveButton(categoryName: String) {
+        binding.viewmodel!!.category.name = categoryName
+        binding.viewmodel!!.createNewCategory(sharedViewModel.user.value?.gId)
     }
 
     private fun showDatePickerDialog() {

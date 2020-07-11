@@ -47,7 +47,7 @@ class RecipieRepository {
 
     fun updateRecipie(recipie: Recipie) {
         db.collection("recipies").document(recipie.id)
-            .set(recipie, SetOptions.merge())
+            .set(recipie.getByHashMap(), SetOptions.merge())
             .addOnSuccessListener {
                 Log.v("OkazuLog", "recipie id: ${recipie.id} updated succcessfully.")
             }

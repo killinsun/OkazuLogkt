@@ -17,11 +17,14 @@
     <string name="delete">削除</string>
     <string name="update">更新</string>
     <string name="edit">編集</string>
+    <string name="cancel">キャンセル</string>
     <string name="editDate">最後の日付を修正</string>
     <string name="languages">言語</string>
     <string name="japanese">日本語</string>
     <string name="english">英語</string>
     <string name="addRecipie">おかずを追加</string>
+    <string name="addCategory">カテゴリを追加</string>
+    <string name="dscCategory">和食、イタリアンなど、カテゴリを設定すると便利です。</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
