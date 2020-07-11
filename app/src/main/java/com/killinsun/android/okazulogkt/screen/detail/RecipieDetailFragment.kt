@@ -11,10 +11,13 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.databinding.RecipieDetailFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
+import com.killinsun.android.okazulogkt.screen.editor.CategoryAdapter
 
 class RecipieDetailFragment : Fragment() {
 
@@ -22,6 +25,7 @@ class RecipieDetailFragment : Fragment() {
 
     private val args: RecipieDetailFragmentArgs by navArgs()
     private val sharedViewModel: RecipieViewModel by activityViewModels()
+    private val viewModel: RecipieDetailViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,8 +34,12 @@ class RecipieDetailFragment : Fragment() {
         binding = RecipieDetailFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
         binding.recipieIndex = args.recipieIndex
-        Log.v("OkazuLog","args: ${args.recipieIndex}")
-        Log.v("OkazuLog","RecipieDetailFragment RecipieViewModel index: ${sharedViewModel.recipies.value!!.size}")
+
+        viewModel.fetchCategory(sharedViewModel.recipies.value?.get(args.recipieIndex)?.categoryId)
+
+        viewModel.category.observe(viewLifecycleOwner, Observer {
+            binding.categoryName = it.name
+        })
 
         binding.editBtn.setOnClickListener{ onClickEditButton() }
         binding.deleteBtn.setOnClickListener { onClickDeleteButton()  }

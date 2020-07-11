@@ -9,6 +9,9 @@
             name="viewmodel"
             type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
         <variable
+            name="categoryName"
+            type="String" />
+        <variable
             name="recipieIndex"
             type="Integer" />
     </data>
@@ -41,6 +44,27 @@
                     android:text="@{viewmodel.recipies[recipieIndex].name}"
                     android:textAlignment="center"
                     android:textSize="24sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="12">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="7"
+                        android:text="@string/category" />
+
+                    <TextView
+                        android:id="@+id/categoryNameTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:text="@{categoryName}" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"

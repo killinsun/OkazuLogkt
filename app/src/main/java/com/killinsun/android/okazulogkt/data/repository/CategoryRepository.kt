@@ -1,6 +1,7 @@
 package com.killinsun.android.okazulogkt.data.repository
 
 import android.util.Log
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
@@ -20,6 +21,12 @@ class CategoryRepository {
             .get()
             .await()
         return querySnapshot
+    }
+
+    suspend fun fetchCategory(id: String): DocumentSnapshot{
+        val docRef = db.collection("categories").document(id)
+
+        return docRef.get().await()
     }
 
     fun createNewCategory(category: Category, gId: String): String {
