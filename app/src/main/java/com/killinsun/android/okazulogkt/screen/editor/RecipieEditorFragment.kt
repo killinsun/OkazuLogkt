@@ -47,9 +47,7 @@ class RecipieEditorFragment :
                 val categoryAdapter: CategoryAdapter = CategoryAdapter(context, it)
                 binding.categorySpinner.adapter = categoryAdapter
 
-                Log.v("OkazuLog", "vm category id : ${viewModel.category.id}")
                 val position = viewModel.category.getPositionById(viewModel.categories.value, viewModel.category.id)
-                Log.v("OkazuLog", "category position is $position")
                 binding.categorySpinner.setSelection(position)
             }
         })

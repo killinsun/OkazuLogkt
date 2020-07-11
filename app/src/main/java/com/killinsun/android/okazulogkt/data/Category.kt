@@ -49,9 +49,12 @@ data class Category(
         if(categories == null || id == null) return defaultPosition
 
         var i = 0
-        categories.forEach{
-            if(it.id == id) return@forEach
-            i++
+        run loop@ {
+            categories.forEach{
+                if(it.id == id) return@loop
+                i++
+            }
+
         }
         if(i > categories.size - 1) return defaultPosition
 
