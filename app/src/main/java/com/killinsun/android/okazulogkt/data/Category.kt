@@ -1,11 +1,8 @@
 package com.killinsun.android.okazulogkt.data
 
-import android.util.Log
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import com.killinsun.android.okazulogkt.screen.editor.DatePick
-import java.lang.Error
 import java.util.*
 import kotlin.collections.HashMap
 
@@ -43,10 +40,8 @@ data class Category(
         )
     }
 
-    fun getPositionById(categories: MutableList<Category>?, id: String?): Int{
+    fun getPositionById(categories: MutableList<Category>, id: String): Int{
         val defaultPosition = 0
-
-        if(categories == null || id == null) return defaultPosition
 
         var i = 0
         run loop@ {
