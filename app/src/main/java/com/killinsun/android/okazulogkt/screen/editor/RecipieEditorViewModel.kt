@@ -1,5 +1,6 @@
 package com.killinsun.android.okazulogkt.screen.editor
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,7 +11,7 @@ import com.killinsun.android.okazulogkt.data.repository.CategoryRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class RecipieEditorViewModel : ViewModel() {
+class RecipieEditorViewModel(val recipie: Recipie?, val gId: String) : ViewModel() {
 
     private val categoryRepository = CategoryRepository()
 
@@ -26,30 +27,44 @@ class RecipieEditorViewModel : ViewModel() {
     val edittingRecipie: LiveData<Recipie>
         get() = _edittingRecipie
 
+    private var _categorySpinnerPosition: Int = 0 // default position is 0
+    val categorySpinnerPosition: Int
+        get() = _categorySpinnerPosition
+
+
     init {
         _edittingRecipie.value = Recipie(count = 1)
+        Log.v("OkazuLog", "viewmodel initialize ${recipie}")
+        setRecipie()
+        fetchCategories()
     }
 
-    fun setRecipie(recipie: Recipie) {
-        _edittingRecipie.value = recipie
-        _category.id = recipie.categoryId
+    fun setRecipie() {
+        if(this.recipie == null) return
+
+        _edittingRecipie.value = this.recipie
+        _category.id = this.recipie.categoryId
+
     }
 
-    fun fetchCategories(gId: String?) {
-        // TODO: danger code
-        if(gId == null) return
-
+    fun fetchCategories() {
         viewModelScope.launch {
             val querySnapshot = categoryRepository.fetchAllCategories(gId)
             _categories.postValue(Category.mapping(querySnapshot))
+            setCategoryPosition()
         }
     }
 
-    fun createNewCategory(gId: String?) {
-        // TODO: danger code
-        if(gId == null) return
+    fun setCategoryPosition(){
+        val categories= _categories.value
+        val categoryId = _category.id
+        if(categories == null || categoryId == null) return
 
-        categoryRepository.createNewCategory(_category, gId)
+        _categorySpinnerPosition = _category.getPositionById(categories, categoryId)
+    }
+
+    fun createNewCategory(){
+        categoryRepository.createNewCategory(_category, this.gId)
         _categories.value?.add(_category)
         _category = Category()
     }
