@@ -2,7 +2,6 @@ package com.killinsun.android.okazulogkt.screen.editor
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.R
@@ -28,27 +28,49 @@ class RecipieEditorFragment :
 
     private val args: RecipieEditorFragmentArgs by navArgs()
     private val sharedViewModel: RecipieViewModel by activityViewModels()
-    private val viewModel: RecipieEditorViewModel by viewModels()
+
+    private lateinit var viewModel: RecipieEditorViewModel
+    private lateinit var recipieEditorVmFactory: RecipieEditorViewModelFactory
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // -------------------------
+        // ViewModel setup
+        // -------------------------
+        if(args.recipieIndex == -1){
+            recipieEditorVmFactory = RecipieEditorViewModelFactory(
+                null,
+                sharedViewModel.user.value!!.gId
+            )
+        } else{
+            recipieEditorVmFactory = RecipieEditorViewModelFactory(
+                sharedViewModel.recipies.value?.get(args.recipieIndex),
+                sharedViewModel.user.value!!.gId
+            )
+        }
+        viewModel = ViewModelProviders.of(this, recipieEditorVmFactory)
+            .get(RecipieEditorViewModel::class.java)
+
+
+        // -------------------------
+        // Data Binding setup
+        // -------------------------
         binding = RecipieEditorFragmentBinding.inflate(inflater, container, false).apply{
             viewmodel = viewModel
             recipieIndex = args.recipieIndex
             lifecycleOwner = viewLifecycleOwner
         }
 
-        binding.viewmodel!!.fetchCategories(sharedViewModel.user.value?.gId)
-
         binding.viewmodel!!.categories.observe(viewLifecycleOwner, Observer{
             if(it != null) {
                 val categoryAdapter: CategoryAdapter = CategoryAdapter(context, it)
                 binding.categorySpinner.adapter = categoryAdapter
-
-                val position = viewModel.category.getPositionById(viewModel.categories.value, viewModel.category.id)
-                binding.categorySpinner.setSelection(position)
+                viewModel.setCategoryPosition()
+                binding.categorySpinner.setSelection(viewModel.categorySpinnerPosition)
             }
         })
 
@@ -68,8 +90,6 @@ class RecipieEditorFragment :
         binding.showDatePickerBtn.setOnClickListener { showDatePickerDialog() }
 
 
-        assignRecipieToBinding()
-
         return binding.root
     }
 
@@ -84,14 +104,6 @@ class RecipieEditorFragment :
 
         }
 
-        assignRecipieToBinding()
-
-    }
-
-    private fun assignRecipieToBinding(){
-       if(args.recipieIndex != -1) {
-           sharedViewModel.recipies.value?.get(args.recipieIndex)?.let { viewModel.setRecipie(it.copy()) }
-       }
     }
 
     private fun onClickAddButton() {
@@ -129,7 +141,7 @@ class RecipieEditorFragment :
 
     override fun onClickDialogPositiveButton(categoryName: String) {
         binding.viewmodel!!.category.name = categoryName
-        binding.viewmodel!!.createNewCategory(sharedViewModel.user.value?.gId)
+        binding.viewmodel!!.createNewCategory()
     }
 
     private fun showDatePickerDialog() {
