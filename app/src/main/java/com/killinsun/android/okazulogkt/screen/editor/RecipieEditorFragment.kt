@@ -29,33 +29,17 @@ class RecipieEditorFragment :
     private val args: RecipieEditorFragmentArgs by navArgs()
     private val sharedViewModel: RecipieViewModel by activityViewModels()
 
-    private lateinit var viewModel: RecipieEditorViewModel
-    private lateinit var recipieEditorVmFactory: RecipieEditorViewModelFactory
-
+    private val viewModel: RecipieEditorViewModel by viewModels {
+        RecipieEditorViewModelFactory(
+            sharedViewModel.getRecipieByIndex(args.recipieIndex),
+            sharedViewModel.user.value!!.gId
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-        // -------------------------
-        // ViewModel setup
-        // -------------------------
-        if(args.recipieIndex == -1){
-            recipieEditorVmFactory = RecipieEditorViewModelFactory(
-                null,
-                sharedViewModel.user.value!!.gId
-            )
-        } else{
-            recipieEditorVmFactory = RecipieEditorViewModelFactory(
-                sharedViewModel.recipies.value?.get(args.recipieIndex),
-                sharedViewModel.user.value!!.gId
-            )
-        }
-        viewModel = ViewModelProviders.of(this, recipieEditorVmFactory)
-            .get(RecipieEditorViewModel::class.java)
-
-
         // -------------------------
         // Data Binding setup
         // -------------------------

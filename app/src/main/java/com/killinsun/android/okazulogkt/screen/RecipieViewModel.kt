@@ -53,6 +53,11 @@ class RecipieViewModel: ViewModel() {
         }
     }
 
+    fun getRecipieByIndex(index: Int): Recipie?{
+        if(index == -1) return null
+        return _recipies.value?.get(index)
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
