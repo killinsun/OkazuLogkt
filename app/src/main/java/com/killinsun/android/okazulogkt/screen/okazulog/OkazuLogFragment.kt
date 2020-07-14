@@ -20,23 +20,28 @@ class OkazuLogFragment : Fragment() {
 
     private val sharedViewModel: RecipieViewModel by activityViewModels()
 
+    lateinit var adapter: OkazuLogAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
+
         binding = OkazuLogFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
+
+        adapter = OkazuLogAdapter(binding.viewmodel!!, viewLifecycleOwner)
 
         sharedViewModel.user.observe(viewLifecycleOwner, Observer {
             sharedViewModel.initializeRecipies(sharedViewModel.user.value?.gId)
         })
 
         binding.viewmodel!!.recipies.observe(viewLifecycleOwner, Observer {
-            val adapter = binding.okazuLogRv.adapter as OkazuLogAdapter?
-            adapter?.setItem(it!!)
+            if (it != null) {
+                adapter.setItem(it)
+            }
         })
-        this.binding = binding
 
         setHasOptionsMenu(true)
         return binding.root
@@ -49,8 +54,6 @@ class OkazuLogFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title ="OkazuLog"
 
         binding.okazuLogRv.layoutManager = LinearLayoutManager(this.context)
-
-        val adapter = OkazuLogAdapter(binding.viewmodel!!, this)
         binding.okazuLogRv.adapter = adapter
 
         adapter.setOnItemClickListener(object: OkazuLogAdapter.OnItemClickListener {

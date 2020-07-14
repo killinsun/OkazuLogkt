@@ -5,8 +5,9 @@
 
     <data>
         <import type="org.apache.commons.lang3.time.DateFormatUtils" />
-        <variable name="viewmodel" type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
+        <variable name="model" type="com.killinsun.android.okazulogkt.data.Recipie" />
         <variable name="position" type="Integer" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -47,11 +48,36 @@
                     android:layout_height="wrap_content"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="@{viewmodel.recipies[position].name}"
+                    android:text="@{model.name}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp"
                     tools:text="hogehogehogehoge" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:weightSum="12">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/lastCookedDay" />
+
+                    <TextView
+                        android:id="@+id/recipieLastDateTv"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@{DateFormatUtils.format(model.lastDate, `yyyy/MM/dd`)}"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp"
+                        tools:text="yyyy/mm/dd" />
+                </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -60,21 +86,18 @@
                     android:weightSum="12">
 
                     <TextView
-                        android:id="@+id/recipieLastDateTv"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
-                        android:text="@{DateFormatUtils.format(viewmodel.recipies[position].lastDate, `yyyy/MM/dd`)}"
-                        android:textAlignment="viewStart"
-                        android:textColor="@color/colorAccent"
-                        android:textSize="14sp"
-                        tools:text="yyyy/mm/dd" />
+                        android:text="@string/cookedCount" />
 
                     <TextView
                         android:id="@+id/recipieCountTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="@{Long.toString(viewmodel.recipies[position].count)}"
+                        android:layout_weight="6"
+                        android:text="@{Long.toString(model.count)}"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"

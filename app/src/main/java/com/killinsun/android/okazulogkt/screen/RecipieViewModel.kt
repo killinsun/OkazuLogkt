@@ -16,7 +16,6 @@ import kotlinx.coroutines.*
 class RecipieViewModel: ViewModel() {
 
     private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     // Firebase Firestore
     val firestore: RecipieRepository =
@@ -53,6 +52,11 @@ class RecipieViewModel: ViewModel() {
         }
     }
 
+    fun getRecipieByIndex(index: Int): Recipie?{
+        if(index == -1) return null
+        return _recipies.value?.get(index)
+    }
+
     override fun onCleared() {
         super.onCleared()
         viewModelJob.cancel()
@@ -84,14 +88,12 @@ class RecipieViewModel: ViewModel() {
 
     fun onDelete(index: Int){
         val deleteRecipie = _recipies.value?.get(index)
-        val newRecipies:MutableList<Recipie> = _recipies.value ?: arrayListOf()
-        uiScope.launch {
+        viewModelScope.launch{
             if (deleteRecipie != null) {
                 firestore.deleteRecipie(deleteRecipie.id)
             }
-            newRecipies.remove(deleteRecipie)
+            _recipies.value?.remove(deleteRecipie)
         }
-        _recipies.value?.remove(deleteRecipie)
     }
 
 }
