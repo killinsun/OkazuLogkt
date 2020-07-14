@@ -56,13 +56,20 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:weightSum="12">
 
                     <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/lastCookedDay" />
+
+                    <TextView
                         android:id="@+id/recipieLastDateTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
                         android:text="@{DateFormatUtils.format(model.lastDate, `yyyy/MM/dd`)}"
@@ -70,11 +77,26 @@
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
                         tools:text="yyyy/mm/dd" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="12">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:text="@string/cookedCount" />
 
                     <TextView
                         android:id="@+id/recipieCountTv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="6"
                         android:text="@{Long.toString(model.count)}"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorAccent"
