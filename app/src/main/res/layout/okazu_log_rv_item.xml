@@ -5,8 +5,9 @@
 
     <data>
         <import type="org.apache.commons.lang3.time.DateFormatUtils" />
-        <variable name="viewmodel" type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
+        <variable name="model" type="com.killinsun.android.okazulogkt.data.Recipie" />
         <variable name="position" type="Integer" />
+        <import type="android.view.View"/>
     </data>
 
     <androidx.cardview.widget.CardView
@@ -47,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
-                    android:text="@{viewmodel.recipies[position].name}"
+                    android:text="@{model.name}"
                     android:textAlignment="viewStart"
                     android:textColor="@color/colorAccent"
                     android:textSize="24sp"
@@ -64,7 +65,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="6"
-                        android:text="@{DateFormatUtils.format(viewmodel.recipies[position].lastDate, `yyyy/MM/dd`)}"
+                        android:text="@{DateFormatUtils.format(model.lastDate, `yyyy/MM/dd`)}"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"
@@ -74,7 +75,7 @@
                         android:id="@+id/recipieCountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@{Long.toString(viewmodel.recipies[position].count)}"
+                        android:text="@{Long.toString(model.count)}"
                         android:textAlignment="viewStart"
                         android:textColor="@color/colorAccent"
                         android:textSize="14sp"

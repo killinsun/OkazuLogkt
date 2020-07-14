@@ -30,7 +30,7 @@ class UserRepository {
         }
     }
 
-    suspend fun createUser(userId: String): User {
+    private suspend fun createUser(userId: String): User {
         val fbUser = FirebaseAuth.getInstance().currentUser
             ?: throw Error("You are not signed in now.")
 

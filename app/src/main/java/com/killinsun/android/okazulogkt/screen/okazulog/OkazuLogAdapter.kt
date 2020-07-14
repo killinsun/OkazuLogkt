@@ -42,8 +42,9 @@ class OkazuLogAdapter (
 
     override fun onBindViewHolder(holder: OkazuLogViewHolder, position: Int) {
 
-        holder.binding.viewmodel = viewModel
-        holder.binding.position = position
+        val model = this.recipies[position] ?: return
+
+        holder.binding.model = model
         Log.v("OkazuLog", "${position} :" + viewModel.recipies.value?.get(position).toString())
         holder.binding.rvItem.setOnClickListener {
             listener.onClick(it, position)
