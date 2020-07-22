@@ -37,7 +37,7 @@ class SignInFragment : Fragment() {
 
         binding.signInButton.setOnClickListener { onLogin() }
         binding.viewmodel = viewModel
-        binding.lifecycleOwner = this
+        binding.lifecycleOwner = viewLifecycleOwner
 
         return binding.root
     }

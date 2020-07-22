@@ -27,9 +27,9 @@ class OkazuLogFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
         binding = OkazuLogFragmentBinding.inflate(inflater, container, false)
         binding.viewmodel = sharedViewModel
+        binding.lifecycleOwner = viewLifecycleOwner
 
         adapter = OkazuLogAdapter(binding.viewmodel!!, viewLifecycleOwner)
 
@@ -37,10 +37,11 @@ class OkazuLogFragment : Fragment() {
             sharedViewModel.initializeRecipies(sharedViewModel.user.value?.gId)
         })
 
-        binding.viewmodel!!.recipies.observe(viewLifecycleOwner, Observer {
+        sharedViewModel.recipies.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 adapter.setItem(it)
             }
+            sharedViewModel.onUpdateRecipies()
         })
 
         setHasOptionsMenu(true)

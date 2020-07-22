@@ -35,8 +35,13 @@ class RecipieViewModel: ViewModel() {
     val user: LiveData<User>
         get() = _user
 
+    private val _isVisibleHint = MutableLiveData<Boolean>()
+    val isVisibleHint: LiveData<Boolean>
+        get() = _isVisibleHint
+
 
     init {
+        _isVisibleHint.value = false
         viewModelScope.launch {
             if (fbUser != null) {
                 _user.value = userRepository.fetchUser(fbUser.uid)
@@ -51,6 +56,11 @@ class RecipieViewModel: ViewModel() {
             _recipies.postValue(Recipie.mapping(querySnapshot))
         }
     }
+
+    fun onUpdateRecipies() {
+        _isVisibleHint.value = _recipies.value?.size == 0
+    }
+
 
     fun getRecipieByIndex(index: Int): Recipie?{
         if(index == -1) return null

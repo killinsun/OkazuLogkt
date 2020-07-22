@@ -7,8 +7,7 @@
         <variable
             name="viewmodel"
             type="com.killinsun.android.okazulogkt.screen.RecipieViewModel" />
-<!--        <import type="android.view.View"/>-->
-
+        <import type="android.view.View"/>
     </data>
 
     <FrameLayout
@@ -17,21 +16,50 @@
         android:background="#EFEFEF"
         tools:context=".screen.okazulog.OkazuLogFragment">
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:layout_margin="16dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:contentDescription="@string/addRecipie"
-            android:src="@drawable/ic_create_black_18dp"
-            app:borderWidth="0dp" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/okazuLogRv"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:layout_margin="16dp"
+                android:backgroundTint="@color/colorPrimary"
+                android:contentDescription="@string/addRecipie"
+                android:src="@drawable/ic_create_black_18dp"
+                app:borderWidth="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <ImageView
+                android:id="@+id/strokeTopRightIv"
+                android:visibility="@{viewmodel.isVisibleHint  == true ? View.VISIBLE : View.GONE}"
+                android:layout_width="207dp"
+                android:layout_height="134dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/fab"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.98"
+                app:srcCompat="@drawable/stroke_top_to_right"
+                android:contentDescription="strokeArrow" />
+
+            <TextView
+                android:id="@+id/hintArrowTv"
+                android:visibility="@{viewmodel.isVisibleHint  == true ? View.VISIBLE : View.GONE}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="タッチして新しいおかずを記録"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toTopOf="@+id/strokeTopRightIv"
+                app:layout_constraintEnd_toEndOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </FrameLayout>
