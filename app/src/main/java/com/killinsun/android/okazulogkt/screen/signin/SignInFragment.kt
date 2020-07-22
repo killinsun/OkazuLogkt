@@ -36,7 +36,6 @@ class SignInFragment : Fragment() {
         })
 
         binding.signInButton.setOnClickListener { onLogin() }
-        binding.signOutButton.setOnClickListener { onLogout() }
         binding.viewmodel = viewModel
         binding.lifecycleOwner = this
 
@@ -65,9 +64,4 @@ class SignInFragment : Fragment() {
             viewModel.onLogin()
         }
     }
-
-    private fun onLogout() {
-        googleAuthController.startSignOut()
-    }
-
 }
