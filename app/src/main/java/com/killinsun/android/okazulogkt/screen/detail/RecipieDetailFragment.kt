@@ -1,11 +1,15 @@
 package com.killinsun.android.okazulogkt.screen.detail
 
+import android.content.Context
 import android.content.DialogInterface
+import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +22,10 @@ import androidx.navigation.fragment.navArgs
 import com.killinsun.android.okazulogkt.databinding.RecipieDetailFragmentBinding
 import com.killinsun.android.okazulogkt.screen.RecipieViewModel
 import com.killinsun.android.okazulogkt.screen.editor.CategoryAdapter
+import io.wovn.wovnkt.Lang
+import io.wovn.wovnkt.Wovn
+import io.wovn.wovnkt.extensions.ignore.wovnIgnore
+import kotlinx.android.synthetic.main.recipie_detail_fragment.*
 
 class RecipieDetailFragment : Fragment() {
 
@@ -26,6 +34,8 @@ class RecipieDetailFragment : Fragment() {
     private val args: RecipieDetailFragmentArgs by navArgs()
     private val sharedViewModel: RecipieViewModel by activityViewModels()
     private val viewModel: RecipieDetailViewModel by viewModels()
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -52,7 +62,22 @@ class RecipieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         (activity as AppCompatActivity).supportActionBar?.title = sharedViewModel.recipies.value?.get(args.recipieIndex)?.name
+
+        val sharedPreferences:SharedPreferences = requireActivity().getSharedPreferences("Preferences", Context.MODE_PRIVATE)
+        Log.v("OkazuLog", sharedPreferences.getString("WOVN_LANG", ""))
+
+        Wovn.changeLang(Lang.english)
+        Wovn.translateView(textView8, "detail")
+        Wovn.translateView(textView4, "detail")
+        Wovn.translateView(textView6, "detail")
+        Wovn.translateView(textView7, "detail")
+        Wovn.translateView(editBtn, "detail")
+        Wovn.translateView(deleteBtn, "detail")
+
+        deleteBtn.setBackgroundColor(Color.RED)
+        editBtn.setBackgroundColor(Color.GREEN)
 
     }
 

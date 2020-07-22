@@ -1,6 +1,8 @@
 package com.killinsun.android.okazulogkt.screen
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -17,6 +19,8 @@ import com.killinsun.android.okazulogkt.databinding.ActivityMainBinding
 import com.killinsun.android.okazulogkt.screen.signin.SignInFragment
 import com.killinsun.android.okazulogkt.screen.signin.SignInFragmentDirections
 import com.killinsun.android.okazulogkt.screen.signin.SignInViewModel
+import io.wovn.wovnkt.Lang
+import io.wovn.wovnkt.Wovn
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -47,7 +51,23 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         Log.v("MainActivity", "${item}")
         val navController = this.findNavController(R.id.myNavHostFragment)
+
+        val sharedPref:SharedPreferences = getSharedPreferences("Preferences", Context.MODE_PRIVATE)
+
+        if(item.itemId == R.id.langEnglish){
+            val editor = sharedPref.edit()
+            editor.putString("WOVN_LANG", "en")
+            editor.apply()
+            return true
+        }else if (item.itemId == R.id.langJapanese){
+            val editor = sharedPref.edit()
+            editor.putString("WOVN_LANG", "en")
+            editor.apply()
+            return true
+        }
+
         return item.onNavDestinationSelected(navController) ||
                 super.onOptionsItemSelected(item)
     }
+
 }
